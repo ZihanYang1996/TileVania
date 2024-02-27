@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Mid Background
     uniqueID: 2521922461
+    locked: 0
+  - name: Ladder
+    uniqueID: 1624621271
     locked: 0
   - name: Water
     uniqueID: 1019136439
