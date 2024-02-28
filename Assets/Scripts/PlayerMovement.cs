@@ -52,7 +52,9 @@ public class PlayerMovement : MonoBehaviour
 
     void InAirAnimation()
     {
-        myAnimator.SetBool("isJumping", !myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")));
+        bool onGround = myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isClimbing = myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        myAnimator.SetBool("isJumping", !onGround && !isClimbing);
     }
 
     void OnJump(InputValue value)
@@ -88,5 +90,13 @@ public class PlayerMovement : MonoBehaviour
         myRigidbody.gravityScale = 0f;
         Vector2 climbVelocity = new Vector2(myRigidbody.velocity.x, moveInput.y * moveSpeed);
         myRigidbody.velocity = climbVelocity;
+        if (moveInput.y != 0)
+        {
+            myAnimator.SetBool("isClimbing", true);
+        }
+        else
+        {
+            myAnimator.SetBool("isClimbing", false);
+        }
     }
 }

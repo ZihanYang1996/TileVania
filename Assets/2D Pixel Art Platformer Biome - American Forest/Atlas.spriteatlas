@@ -136,6 +136,7 @@ SpriteAtlas:
     - 5fe5454ec8605de43809133b020d1b69: 1149072864
     - 5fe5454ec8605de43809133b020d1b69: -116768579
     - 5fe5454ec8605de43809133b020d1b69: 747311438
+    - 5fe5454ec8605de43809133b020d1b69: 588976484
     - 5fe5454ec8605de43809133b020d1b69: 362551460
     - 5fe5454ec8605de43809133b020d1b69: -904001968
     - 5fe5454ec8605de43809133b020d1b69: -890148158
@@ -227,6 +228,7 @@ SpriteAtlas:
   - {fileID: 1149072864, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   - {fileID: -116768579, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   - {fileID: 747311438, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
+  - {fileID: 588976484, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   - {fileID: 362551460, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   - {fileID: -904001968, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   - {fileID: -890148158, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
@@ -317,6 +319,7 @@ SpriteAtlas:
   - TileGround19
   - Plant5
   - TileGround18
+  - Sprites_0
   - TilePlant11
   - TilePlant10
   - TilePlant12
