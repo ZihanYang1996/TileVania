@@ -13,13 +13,15 @@ public class PlayerMovement : MonoBehaviour
     private float gravityScaleAtStart;
     Rigidbody2D myRigidbody;
     Animator myAnimator;
-    CapsuleCollider2D myCapsuleCollider;
+    CapsuleCollider2D myBodyCollider;
+    BoxCollider2D myFeetCollider;
 
     void Awake()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
-        myCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myFeetCollider = GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
     }
     void Start()
@@ -49,21 +51,21 @@ public class PlayerMovement : MonoBehaviour
 
         // If the player is moving and touching the ground, then the player is running
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
-        bool playerIsTouchingGround = myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool playerIsTouchingGround = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
         myAnimator.SetBool("isRunning", playerHasHorizontalSpeed && playerIsTouchingGround);
     }
 
     void InAirAnimation()
     {
-        bool onGround = myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
-        bool isClimbing = myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        bool onGround = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isClimbing = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
         myAnimator.SetBool("isJumping", !onGround && !isClimbing);
     }
 
     void OnJump(InputValue value)
     {
         // If the player is not touching the ground, then the player cannot jump
-        if (!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
+        if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
         if (value.isPressed)
         {
             myRigidbody.velocity += new Vector2(0f, jumpSpeed);
@@ -84,7 +86,8 @@ public class PlayerMovement : MonoBehaviour
     void ClimbLadder()
     {
         // If the player is not touching the ladder, then the player cannot climb
-        if (!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        bool playerIsTouchingLadder = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        if (!playerIsTouchingLadder)
         {
             myRigidbody.gravityScale = gravityScaleAtStart;
             return;
