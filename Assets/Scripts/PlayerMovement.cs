@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveInput;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpSpeed = 10f;
+    [SerializeField] private float maxSpeed = 15f;
     private float gravityScaleAtStart;
     Rigidbody2D myRigidbody;
     Animator myAnimator;
@@ -23,15 +24,17 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
+
         Run();
         ClimbLadder();
         InAirAnimation();
         FlipSprite();
+        ClampVelocity();
     }
 
     void OnMove(InputValue value)
@@ -43,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 playerVelocity = new Vector2(moveInput.x * moveSpeed, myRigidbody.velocity.y);
         myRigidbody.velocity = playerVelocity;
-        
+
         // If the player is moving and touching the ground, then the player is running
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
         bool playerIsTouchingGround = myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
@@ -66,12 +69,12 @@ public class PlayerMovement : MonoBehaviour
             myRigidbody.velocity += new Vector2(0f, jumpSpeed);
         }
     }
-    
+
     void FlipSprite()
     {
         // Need to check if the player is moving, otherwise the player will always face right, since Mathf.Sign(0) = 1
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
-        
+
         if (playerHasHorizontalSpeed)
         {
             transform.localScale = new Vector3(Mathf.Sign(myRigidbody.velocity.x), 1f, 1f);
@@ -86,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
             myRigidbody.gravityScale = gravityScaleAtStart;
             return;
         }
-        
+
         myRigidbody.gravityScale = 0f;
         Vector2 climbVelocity = new Vector2(myRigidbody.velocity.x, moveInput.y * moveSpeed);
         myRigidbody.velocity = climbVelocity;
@@ -98,5 +101,24 @@ public class PlayerMovement : MonoBehaviour
         {
             myAnimator.SetBool("isClimbing", false);
         }
+    }
+
+    void ClampVelocity()
+    {
+        // Clamp the velocity of the player so that the player does not move too fast
+        
+        // Debug.Log("Before Clamp: " + myRigidbody.velocity.magnitude);
+
+        // This is the normal way to clamp the velocity
+        myRigidbody.velocity = Vector2.ClampMagnitude(myRigidbody.velocity, maxSpeed);
+        
+        // Alternative way to clamp the velocity
+        // if (myRigidbody.velocity.sqrMagnitude > (maxSpeed * maxSpeed))
+        // {
+        //     myRigidbody.velocity = myRigidbody.velocity.normalized * maxSpeed;
+        // }
+
+        // Debug.Log("Expected: " + Vector2.ClampMagnitude(myRigidbody.velocity, maxSpeed));
+        // Debug.Log("After Clamp: " + myRigidbody.velocity.magnitude);
     }
 }
