@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         InAirAnimation();
         FlipSprite();
         ClampVelocity();
-        Die();
+        Die(); // Can be replaced with OnCollisionEnter2D
     }
 
     void OnMove(InputValue value)
@@ -139,4 +139,14 @@ public class PlayerMovement : MonoBehaviour
             myRigidbody.velocity = new Vector2(0f, jumpSpeed);
         }
     }
+
+    // void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    //     {
+    //         isAlive = false;
+    //         myAnimator.SetTrigger("Dying");
+    //         myRigidbody.velocity = new Vector2(0f, jumpSpeed);
+    //     }
+    // }
 }
