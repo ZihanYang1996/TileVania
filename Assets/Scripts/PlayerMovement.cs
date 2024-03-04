@@ -6,15 +6,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector2 moveInput;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float maxSpeed = 15f;
+    Vector2 moveInput;
     private float gravityScaleAtStart;
     Rigidbody2D myRigidbody;
     Animator myAnimator;
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeetCollider;
+
+    bool isAlive = true;
 
     void Awake()
     {
@@ -31,16 +33,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
+        if (!isAlive) return;
         Run();
         ClimbLadder();
         InAirAnimation();
         FlipSprite();
         ClampVelocity();
+        Die();
     }
 
     void OnMove(InputValue value)
     {
+        if (!isAlive) return;
         moveInput = value.Get<Vector2>();
     }
 
@@ -65,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     void OnJump(InputValue value)
     {
         // If the player is not touching the ground, then the player cannot jump
+        if (!isAlive) return;
         if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
         if (value.isPressed)
         {
@@ -123,5 +128,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Debug.Log("Expected: " + Vector2.ClampMagnitude(myRigidbody.velocity, maxSpeed));
         // Debug.Log("After Clamp: " + myRigidbody.velocity.magnitude);
+    }
+
+    void Die()
+    {
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        {
+            isAlive = false;
+            myAnimator.SetTrigger("Dying");
+            myRigidbody.velocity = new Vector2(0f, jumpSpeed);
+        }
     }
 }
