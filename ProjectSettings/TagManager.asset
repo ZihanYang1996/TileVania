@@ -16,7 +16,7 @@ TagManager:
   - Background
   - Bouncing
   - Enemy
-  - 
+  - Hazard
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Water
     uniqueID: 1019136439
+    locked: 0
+  - name: Hazard
+    uniqueID: 3304014163
     locked: 0
   - name: Platforms
     uniqueID: 1021019857
