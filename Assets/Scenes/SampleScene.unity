@@ -9878,7 +9878,7 @@ GameObject:
   - component: {fileID: 314645839}
   m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9951,8 +9951,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.002292633, y: -0.08485055}
-  m_Size: {x: 0.2586441, y: 0.2586441}
+  m_Offset: {x: 0.002292633, y: -0.1688174}
+  m_Size: {x: 0.2586441, y: 0.4265778}
   m_Direction: 0
 --- !u!50 &314645836
 Rigidbody2D:
