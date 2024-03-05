@@ -149,4 +149,10 @@ public class PlayerMovement : MonoBehaviour
     //         myRigidbody.velocity = new Vector2(0f, jumpSpeed);
     //     }
     // }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) return;
+        myAnimator.SetTrigger("isAttacking");
+    }
 }
