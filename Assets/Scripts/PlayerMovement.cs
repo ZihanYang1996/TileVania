@@ -80,17 +80,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Old FlipSprite method that flips the player based on the player's velocity
+    // void FlipSprite()
+    // {
+    //     // Need to check if the player is moving, otherwise the player will always face right, since Mathf.Sign(0) = 1
+    //     bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+
+    //     if (playerHasHorizontalSpeed)
+    //     {
+    //         transform.localScale = new Vector3(Mathf.Sign(myRigidbody.velocity.x), 1f, 1f);
+    //     }
+    // }
+
+    // New FlipSprite method that flips the player based on the mouse position
     void FlipSprite()
     {
-        // Need to check if the player is moving, otherwise the player will always face right, since Mathf.Sign(0) = 1
-        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+        Vector3 mouseScreenPosition = Input.mousePosition;
+        mouseScreenPosition.z = 0;  // Ensure it's at the 0 z plane
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        mouseWorldPosition.z = 0;   // Ensure it's at the 0 z plane
 
-        if (playerHasHorizontalSpeed)
-        {
-            transform.localScale = new Vector3(Mathf.Sign(myRigidbody.velocity.x), 1f, 1f);
-        }
+        transform.localScale = new Vector3(Mathf.Sign(mouseWorldPosition.x - transform.position.x), 1f, 1f);
     }
-
     void ClimbLadder()
     {
         // If the player is not touching the ladder, then the player cannot climb
@@ -117,12 +128,12 @@ public class PlayerMovement : MonoBehaviour
     void ClampVelocity()
     {
         // Clamp the velocity of the player so that the player does not move too fast
-        
+
         // Debug.Log("Before Clamp: " + myRigidbody.velocity.magnitude);
 
         // This is the normal way to clamp the velocity
         myRigidbody.velocity = Vector2.ClampMagnitude(myRigidbody.velocity, maxSpeed);
-        
+
         // Alternative way to clamp the velocity
         // if (myRigidbody.velocity.sqrMagnitude > (maxSpeed * maxSpeed))
         // {
