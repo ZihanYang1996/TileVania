@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float maxSpeed = 15f;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform firePoint;
+    [SerializeField] float bulletDelay = 0.28f;
     Vector2 moveInput;
     private float gravityScaleAtStart;
     Rigidbody2D myRigidbody;
@@ -154,5 +157,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isAlive) return;
         myAnimator.SetTrigger("isAttacking");
+        Invoke("InstantiateBullet", bulletDelay);
+    }
+    void InstantiateBullet()
+    {
+        Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 }

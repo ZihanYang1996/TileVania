@@ -10642,6 +10642,11 @@ MonoBehaviour:
     m_ParentHash: 756556552
   - m_Hash: 421803916
     m_ParentHash: 756556552
+--- !u!4 &1346807124 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6954591449377996261, guid: cc7e0648d8078ab43947b902a43fabb2, type: 3}
+  m_PrefabInstance: {fileID: 7407180136253341296}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1447888656
 GameObject:
   m_ObjectHideFlags: 0
@@ -11863,6 +11868,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1679855022571000305, guid: cc7e0648d8078ab43947b902a43fabb2, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 5624299971547316544, guid: 2b78162e09881724aa21500fe3570521, type: 3}
+    - target: {fileID: 1679855022571000305, guid: cc7e0648d8078ab43947b902a43fabb2, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 1346807124}
+    - target: {fileID: 1679855022571000305, guid: cc7e0648d8078ab43947b902a43fabb2, type: 3}
+      propertyPath: bulletDelay
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 2202041846484940915, guid: cc7e0648d8078ab43947b902a43fabb2, type: 3}
       propertyPath: m_Name
       value: Wizard
