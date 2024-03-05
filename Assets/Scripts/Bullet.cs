@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float initialBulletSpeed = 10f;
     [SerializeField] float bulletSpeedYMax = 10f;
+    [SerializeField] float bulletLifespan = 5f;
     
     float bulletSpeedX;
 
@@ -22,7 +23,7 @@ public class Bullet : MonoBehaviour
         mouseWorldPosition.z = 0;   // Ensure it's at the 0 z plane
         Vector2 direction = (mouseWorldPosition - transform.position).normalized;
         myRigidbody.velocity = direction * initialBulletSpeed;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, bulletLifespan);
     }
 
     void Update()

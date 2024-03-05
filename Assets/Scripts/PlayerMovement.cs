@@ -154,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Old Die method that uses OnCollisionEnter2D
     // void OnCollisionEnter2D(Collision2D other)
     // {
     //     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -163,6 +164,14 @@ public class PlayerMovement : MonoBehaviour
     //         myRigidbody.velocity = new Vector2(0f, jumpSpeed);
     //     }
     // }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Destroy(other.gameObject);  // Kill the enemy when the player jumps on it or touches it from behind
+        }
+    }
 
     void OnFire(InputValue value)
     {
