@@ -166,13 +166,14 @@ public class PlayerMovement : MonoBehaviour
     //     }
     // }
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            Destroy(other.gameObject);  // Kill the enemy when the player jumps on it or touches it from behind
-        }
-    }
+    // Remove this feature, not what we want, it only works because OnCllisionEnter2D is executed before the Update method
+    // void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    //     {
+    //         Destroy(other.gameObject);  // Kill the enemy when the player jumps on it or touches it from behind
+    //     }
+    // }
 
     void OnFire(InputValue value)
     {
