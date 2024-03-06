@@ -152,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             myRigidbody.velocity = new Vector2(0f, jumpSpeed);
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();  // Call the ProcessPlayerDeath method from the GameSession script
         }
     }
 
