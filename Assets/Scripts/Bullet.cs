@@ -31,15 +31,16 @@ public class Bullet : MonoBehaviour
         myRigidbody.velocity = Vector2.ClampMagnitude(myRigidbody.velocity, bulletSpeedYMax);
     }
 
+    // OnCollisionEnter2D is enough
     // When colliding with the box collider of the enemy, which is a trigger
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Enemy")  // Can use other.gameObject.layer == LayerMask.GetMask("Enemy") instead of tag
-        {
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.gameObject.tag == "Enemy")  // Can use other.gameObject.layer == LayerMask.GetMask("Enemy") instead of tag
+    //     {
+    //         Destroy(other.gameObject);
+    //         Destroy(gameObject);
+    //     }
+    // }
     
     // When colliding with the capsule collider of the enemy
     void OnCollisionEnter2D(Collision2D other)
