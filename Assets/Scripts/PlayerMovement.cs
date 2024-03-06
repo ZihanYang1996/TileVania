@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         if (!playerIsTouchingLadder)
         {
             myRigidbody.gravityScale = gravityScaleAtStart;
+            myAnimator.SetBool("isClimbing", false);
             return;
         }
 
