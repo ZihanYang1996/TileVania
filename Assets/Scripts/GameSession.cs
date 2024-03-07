@@ -38,7 +38,7 @@ public class GameSession : MonoBehaviour
         }
         else
         {
-            ResetGameSession();
+            ResetGameSession();  // Reset the game session when the player runs out of lives
         }
     }
 
@@ -52,6 +52,7 @@ public class GameSession : MonoBehaviour
 
     void ResetGameSession()
     {
+        FindObjectOfType<ScenePersist>().ResetScenePersist();  // Reset the ScenePersist
         SceneManager.LoadScene(0); // Load the first scene
         Destroy(gameObject);
     }

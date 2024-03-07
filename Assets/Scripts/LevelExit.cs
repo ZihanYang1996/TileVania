@@ -30,6 +30,7 @@ public class LevelExit : MonoBehaviour
             nextSceneIndex = 0;
         }
         // Load the next scene (which is a copy of the current scene)
+        FindObjectOfType<ScenePersist>().ResetScenePersist();
         SceneManager.LoadScene(nextSceneIndex);        
     }
 }
