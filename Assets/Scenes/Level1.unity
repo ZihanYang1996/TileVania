@@ -42758,6 +42758,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3778668176069918151, guid: 2fa8f35b034241b499de0e1cc8f8848e, type: 3}
+      propertyPath: pickupSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: b102303ac4ef4cf4ab898ec671342ee0, type: 3}
     - target: {fileID: 7036890924170906486, guid: 2fa8f35b034241b499de0e1cc8f8848e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20.533
