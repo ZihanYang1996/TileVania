@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameSession : MonoBehaviour
 {
     [SerializeField] int playersLives = 3;
+    int score = 0;
     void Awake()
     {
         // Singleton pattern
@@ -44,5 +45,10 @@ public class GameSession : MonoBehaviour
     {
         SceneManager.LoadScene(0); // Load the first scene
         Destroy(gameObject);
+    }
+
+    public void AddToScore(int points)
+    {
+        score += points;
     }
 }
