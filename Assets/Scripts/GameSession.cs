@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Diagnostics.CodeAnalysis;
 
 public class GameSession : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameSession : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
     int score = 0;
+
+    Vector3 lastCheckpointPosition;
+
     void Awake()
     {
         // Singleton pattern (works but not the most standard way to do it)
@@ -35,6 +39,7 @@ public class GameSession : MonoBehaviour
         {
             Destroy(gameObject);  //To avoid having more than one GameSession
         }
+        lastCheckpointPosition = FindObjectOfType<PlayerMovement>().transform.position;  // Set the initial checkpoint position
     }
 
     void Start()
@@ -59,7 +64,9 @@ public class GameSession : MonoBehaviour
         playersLives--;
         livesText.text = playersLives.ToString();  // Update the lives text
         var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex); // Reload the current scene (restart the level
+        // Restart the current scene and respawn the player at the last checkpoint
+        // SceneManager.LoadScene(currentSceneIndex);
+        FindObjectOfType<PlayerMovement>().Respawn(lastCheckpointPosition);  
     }
 
     void ResetGameSession()
@@ -73,5 +80,12 @@ public class GameSession : MonoBehaviour
     {
         score += points;
         scoreText.text = score.ToString();  // Update the score text
+    }
+
+    public void UpdateCheckpoint(Vector3 NewCheckPointPosition)
+    {
+        // Debug.Log("Last checkpoint: " + lastCheckpointPosition);
+        lastCheckpointPosition = NewCheckPointPosition;
+        // Debug.Log("New checkpoint: " + lastCheckpointPosition);
     }
 }

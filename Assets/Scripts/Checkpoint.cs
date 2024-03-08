@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    bool isTriggered = false;
+    void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.gameObject.tag == "Player" && !isTriggered)
+        {
+            GameSession.instance.UpdateCheckpoint(transform.position);
+            isTriggered = true;
+        }
     }
 }

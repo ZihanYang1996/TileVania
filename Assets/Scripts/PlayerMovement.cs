@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
     [SerializeField] float bulletDelay = 0.28f;
+    [SerializeField] float invincibilityTime = 2f;
     Vector2 moveInput;
     private float gravityScaleAtStart;
     Rigidbody2D myRigidbody;
@@ -20,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D myFeetCollider;
 
     bool isAlive = true;
+
+    bool isInvincible = false;
 
     void Awake()
     {
@@ -73,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // If the player is not touching the ground, then the player cannot jump
         if (!isAlive) return;
-        if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
+        if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Bullets", "Bouncing"))) return;
         if (value.isPressed)
         {
             myRigidbody.velocity += new Vector2(0f, jumpSpeed);
@@ -147,12 +150,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazard")))
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazard", "Water")) && !isInvincible)
         {
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             myRigidbody.velocity = new Vector2(0f, jumpSpeed);
-            FindObjectOfType<GameSession>().ProcessPlayerDeath();  // Call the ProcessPlayerDeath method from the GameSession script
+
+            // Call the ProcessPlayerDeath method from the GameSession script after 1.5 seconds
+            FindObjectOfType<GameSession>().Invoke("ProcessPlayerDeath", 1.5f);
         }
     }
 
@@ -185,5 +190,25 @@ public class PlayerMovement : MonoBehaviour
     void InstantiateBullet()
     {
         Instantiate(bullet, firePoint.position, firePoint.rotation);
+    }
+
+    public void Respawn(Vector3 respawnPosition)
+    {
+        moveInput = new Vector2(0, 0);  // Reset the move input to avoid the player moving when respawning
+        isAlive = true;
+        myAnimator.Rebind();  // Reset the animator
+        StartCoroutine(BecomeInvincible(invincibilityTime));
+        gameObject.transform.position = respawnPosition;
+    }
+
+    IEnumerator BecomeInvincible(float invincibilityTime)
+    {
+        // Ignore the collision between the player and the enemy for a few seconds
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+        // Set the invincibility flag to true
+        isInvincible = true;
+        yield return new WaitForSeconds(invincibilityTime);
+        isInvincible = false;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
     }
 }
