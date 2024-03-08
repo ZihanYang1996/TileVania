@@ -7,21 +7,33 @@ using TMPro;
 
 public class GameSession : MonoBehaviour
 {
+    public static GameSession instance;
     [SerializeField] int playersLives = 3;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
     int score = 0;
     void Awake()
     {
-        // Singleton pattern
-        int numGameSessions = FindObjectsOfType<GameSession>().Length;
-        if (numGameSessions > 1)
+        // Singleton pattern (works but not the most standard way to do it)
+        // int numGameSessions = FindObjectsOfType<GameSession>().Length;
+        // if (numGameSessions > 1)
+        // {
+        //     Destroy(gameObject);  //To avoid having more than one GameSession
+        // }
+        // else
+        // {
+        //     DontDestroyOnLoad(gameObject); //To avoid destroying the GameSession when loading a new scene
+        // }
+
+        // Singleton pattern (the most standard way to do it)
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
         {
             Destroy(gameObject);  //To avoid having more than one GameSession
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject); //To avoid destroying the GameSession when loading a new scene
         }
     }
 
